@@ -1,7 +1,7 @@
 require 'httparty'
 require_relative 'response_object'
 
-class PDBDataQuery
+class PDBDataAPI
   VERSION = 'v1'
   BASE_CORE_URL = "https://data.rcsb.org/rest/#{VERSION}/core"
   BASE_HOLDINGS_URL = "https://data.rcsb.org/rest/#{VERSION}/holdings"
@@ -56,7 +56,7 @@ class PDBDataQuery
   end
 
   def self.entry_groups_service(group_id)
-    sel.make_rest_request("#{BASE_CORE_URL}/etnry_groups/#{group_id}")
+    self.make_rest_request("#{BASE_CORE_URL}/etnry_groups/#{group_id}")
   end
 
   def self.group_provenance_service(group_provenance_id)
@@ -82,12 +82,9 @@ class PDBDataQuery
     self.make_rest_request("#{BASE_HOLDINGS_URL}/status/#{entry_ids}")
   end
 
-  def self.removed_holdings_service(entry_ids=nil)
-    if entry_ids.class == Array
-      entry_ids = entry_ids.join(',')
-    end
-    entry_ids ||= 'entry_ids'
-    self.make_rest_request("#{BASE_HOLDINGS_URL}/removed/#{entry_ids}")
+  def self.removed_holdings_service(entry_id=nil)
+    entry_id ||= 'entry_ids'
+    self.make_rest_request("#{BASE_HOLDINGS_URL}/removed/#{entry_id}")
   end
 
   def self.unreleased_holdings_service(entry_ids=nil)
@@ -150,11 +147,6 @@ class PDBDataQuery
 
   def self.make_rest_request(url)
     response = HTTParty.get(url)
-    if response.code == 200
-      response[:success] = true
-    else
-      response = { code: response.code, error_message: response['message'], success: false }
-    end
     ResponseObject.new(response)
   end
 end

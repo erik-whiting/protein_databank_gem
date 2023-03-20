@@ -1,27 +1,46 @@
 require 'json'
 
 class ResponseObject
-  attr_accessor :body, :status, :success
+  attr_accessor :body, :status, :success, :multiple_records, :records
   def initialize(htt_party_response)
     @status = htt_party_response.code
-    if htt_party_response.code == 200
+    if @status && @status == 200
       @success = true
       @body = htt_party_response.parsed_response
-      set_attributes!
+      if @body.class == Hash
+        set_attributes_from_hash!
+      elsif @body.class == Array
+        set_attributes_from_array!
+      end
     else
       @success = false
-      @body = { code: response.code, error_message: response['message'], success: false }
+      @body = {
+        code: htt_party_response['code'],
+        error_message: htt_party_response['message'],
+        success: false
+      }
     end
   end
 
   def response_attributes
-    @body.keys
+    return @body.keys unless @multiple_records
+    nil
   end
 
-  def set_attributes!
+  def set_attributes_from_hash!
+    @records = nil
+    @multiple_records = false
     response_attributes.each do |ra|
       self.instance_variable_set("@#{ra}", @body[ra])
       self.singleton_class.instance_eval { attr_accessor ra }
+    end
+  end
+
+  def set_attributes_from_array!
+    @records = []
+    @multiple_records = true
+    @body.each do |item|
+      @records.push(item)
     end
   end
 end
