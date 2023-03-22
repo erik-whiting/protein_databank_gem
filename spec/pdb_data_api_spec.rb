@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe PDBDataAPI do
   let(:service) { PDBDataAPI.send(method, *params) }
+  let(:params) { [] } # Default
   describe 'assembly_service' do
     let(:method) { :assembly_service }
     let(:params) { ['1RH7', 1] }
@@ -203,74 +204,87 @@ RSpec.describe PDBDataAPI do
   end
 
   describe 'assembly_schema_service' do
+    let(:method) { :assembly_schema_service }
+    let(:params) { [] }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'branched_entity_instance_schema_service' do
+    let(:method) { :branched_entity_instance_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'branched_entity_schema_service' do
+    let(:method) { :branched_entity_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'chem_comp_schema_service' do
+    let(:method) { :chem_comp_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'drugbank_schema_service' do
+    let(:method) { :drugbank_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'entry_schema_service' do
+    let(:method) { :entry_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'nonpolymer_entity_instance_schema_service' do
+    let(:method) { :nonpolymer_entity_instance_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'nonpolymer_entity_schema_service' do
+    let(:method) { :nonpolymer_entity_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'polymer_entity_instance_schema_service' do
+    let(:method) { :polymer_entity_instance_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'polymer_entity_schema_service' do
+    let(:method) { :polymer_entity_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'pubmed_schema_service' do
+    let(:method) { :pubmed_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 
   describe 'uniprot_schema_service' do
+    let(:method) { :uniprot_schema_service }
     it 'does not raise any errors' do
-      # expect(service.success).to be true
+      expect(service.success).to be true
     end
   end
 end

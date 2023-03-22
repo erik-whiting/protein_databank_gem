@@ -31,6 +31,11 @@ class ResponseObject
     @records = nil
     @multiple_records = false
     response_attributes.each do |ra|
+      if ra[0] == '$'
+        # Some endpoints return attribtues that start with a dollar
+        # sign, which is not allowed in a Ruby object attribute.
+        ra = ra[1..]
+      end
       self.instance_variable_set("@#{ra}", @body[ra])
       self.singleton_class.instance_eval { attr_accessor ra }
     end
